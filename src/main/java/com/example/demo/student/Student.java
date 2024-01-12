@@ -1,6 +1,5 @@
 package com.example.demo.student;
 
-import java.lang.reflect.Constructor;
 import java.time.LocalDate;
 
 public class Student {
@@ -10,15 +9,15 @@ public class Student {
     private Integer age;
     private LocalDate dob;
 
-    public Student() {}
+    public Student() {
+    }
 
     public Student(
-        Long id,
-        String name,
-        String email,
-        Integer age,
-        LocalDate dob
-    ) {
+            Long id,
+            String name,
+            String email,
+            Integer age,
+            LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -27,11 +26,10 @@ public class Student {
     }
 
     public Student(
-        String name,
-        String email,
-        Integer age,
-        LocalDate dob
-    ) {
+            String name,
+            String email,
+            Integer age,
+            LocalDate dob) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -80,11 +78,11 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" + 
-        "id=" + id + 
-        ", name=" + name  + '\'' +
-        ", email=" + email +  '\'' +
-        ", dob=" + dob + 
-        ", age="  + age + '}';
+        return "Student{" +
+                "id=" + id +
+                ", name=" + name + '\'' +
+                ", email=" + email + '\'' +
+                ", dob=" + dob +
+                ", age=" + age + '}';
     }
 }
