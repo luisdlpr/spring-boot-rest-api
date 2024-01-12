@@ -1,12 +1,28 @@
 package com.example.demo.student;
 
+import jakarta.persistence.*;
+import static jakarta.persistence.GenerationType.SEQUENCE;
 import java.time.LocalDate;
 
+@Entity(name = "STUDENT")
+@Table(name = "STUDENT")
 public class Student {
+    @Id
+    @SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "student_sequence")
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
+
+    @Column(name = "email", nullable = false, columnDefinition = "TEXT")
     private String email;
+
+    @Column(name = "age", nullable = false)
     private Integer age;
+
+    @Column(name = "dob", nullable = false)
     private LocalDate dob;
 
     public Student() {
