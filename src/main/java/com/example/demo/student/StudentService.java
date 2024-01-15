@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.stereotype.Component; also valid but use service for semantics
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class StudentService {
 
@@ -38,5 +40,26 @@ public class StudentService {
         }
 
         studentRepository.deleteById(studentId);
+    }
+
+    @Transactional
+    public void updateStudent(Long studentId, String name, String email) {
+        Student student = studentRepository
+            .findById(studentId)
+            .orElseThrow(() -> new IllegalStateException(
+                "student with id " + studentId + " does not exist"
+        ));
+
+        if (name != null && name.length() > 0) {
+            student.setName(name);
+        }
+        if (
+            email != null && 
+            email.length() > 0 && 
+            !studentRepository.findStudentByEmail(email).isPresent()
+        ) {
+            student.setEmail(name);
+        }
+        studentRepository.save(student);
     }
 }
