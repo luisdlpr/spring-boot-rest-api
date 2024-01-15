@@ -3,6 +3,7 @@ package com.example.demo.student;
 import jakarta.persistence.*;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity(name = "STUDENT")
 @Table(name = "STUDENT")
@@ -19,7 +20,7 @@ public class Student {
     @Column(name = "email", nullable = false, columnDefinition = "TEXT")
     private String email;
 
-    @Column(name = "age", nullable = false)
+    @Transient // removed age column from db
     private Integer age;
 
     @Column(name = "dob", nullable = false)
@@ -32,33 +33,29 @@ public class Student {
             Long id,
             String name,
             String email,
-            Integer age,
             LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.age = age;
         this.dob = dob;
     }
 
     public Student(
             String name,
             String email,
-            Integer age,
             LocalDate dob) {
         this.name = name;
         this.email = email;
-        this.age = age;
         this.dob = dob;
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+    //
+    // public void setAge(Integer age) {
+    // this.age = age;
+    // }
 
     public Long getId() {
         return id;

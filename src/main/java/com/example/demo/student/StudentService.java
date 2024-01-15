@@ -1,6 +1,7 @@
 package com.example.demo.student;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.stereotype.Component; also valid but use service for semantics
@@ -18,5 +19,16 @@ public class StudentService {
 
     public List<Student> getStudents() {
         return studentRepository.findAll();
+    }
+
+    public void addNewStudent(Student student) {
+        Optional<Student> studentByEmail = studentRepository
+            .findStudentByEmail(student.getEmail());
+
+        if (studentByEmail.isPresent()) { // example validation
+            throw new IllegalStateException("email taken");
+        } 
+
+        studentRepository.save(student);
     }
 }
