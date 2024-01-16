@@ -3,6 +3,7 @@ package com.example.demo.student;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.stereotype.Component; also valid but use service for semantics
 import org.springframework.stereotype.Service;
@@ -24,12 +25,21 @@ public class StudentService {
     }
 
     public void addNewStudent(Student student) {
+        // check valid email is given
+        EmailValidator emailValidator = EmailValidator.getInstance();
+
+        if (student.getEmail() != null && !emailValidator.isValid(student.getEmail())) {
+            throw new IllegalArgumentException("invalid email given");
+        } else if (student.getName().length() <= 0) {
+            throw new IllegalArgumentException("invalid name given");
+        }
+
         Optional<Student> studentByEmail = studentRepository
-            .findStudentByEmail(student.getEmail());
+                .findStudentByEmail(student.getEmail());
 
         if (studentByEmail.isPresent()) { // example validation
             throw new IllegalStateException("email taken");
-        } 
+        }
 
         studentRepository.save(student);
     }
@@ -45,21 +55,22 @@ public class StudentService {
     @Transactional
     public void updateStudent(Long studentId, String name, String email) {
         Student student = studentRepository
-            .findById(studentId)
-            .orElseThrow(() -> new IllegalStateException(
-                "student with id " + studentId + " does not exist"
-        ));
+                .findById(studentId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "student with id " + studentId + " does not exist"));
 
         if (name != null && name.length() > 0) {
             student.setName(name);
         }
-        if (
-            email != null && 
-            email.length() > 0 && 
-            !studentRepository.findStudentByEmail(email).isPresent()
-        ) {
+
+        EmailValidator emailValidator = EmailValidator.getInstance();
+        if (email != null &&
+                email.length() > 0 &&
+                !studentRepository.findStudentByEmail(email).isPresent() &&
+                emailValidator.isValid(email)) {
             student.setEmail(name);
         }
+
         studentRepository.save(student);
     }
 }
