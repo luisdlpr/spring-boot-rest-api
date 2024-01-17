@@ -1,11 +1,6 @@
-package com.example.demo;
+package com.example.demo.student;
 
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.lang.NonNull;
-
-import com.example.demo.student.Student;
-import com.example.demo.student.StudentRepository;
-import com.example.demo.student.StudentService;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -21,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
-@SpringBootTest
+@SpringBootTest(classes = { Student.class })
 public class StudentServiceTest {
 
         @Mock
