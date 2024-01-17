@@ -1,3 +1,4 @@
+//HTTP Layer
 package com.example.demo.student;
 
 import java.util.List;
@@ -34,17 +35,16 @@ public class StudentController {
         this.studentService.addNewStudent(student);
     }
 
-    @DeleteMapping(path="{studentId}")
+    @DeleteMapping(path = "{studentId}")
     public void deleteStudent(@PathVariable("studentId") Long ID) {
         this.studentService.deleteStudent(ID);
     }
 
-    @PutMapping(path="{studentId}")
+    @PutMapping(path = "{studentId}")
     public void updateStudent(
-        @PathVariable("studentId") Long ID,
-        @RequestParam(required = false) String name,
-        @RequestParam(required = false) String email
-    ) {
+            @PathVariable("studentId") Long ID,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email) {
         this.studentService.updateStudent(ID, name, email);
     }
 }

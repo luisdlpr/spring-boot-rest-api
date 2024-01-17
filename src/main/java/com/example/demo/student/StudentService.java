@@ -1,3 +1,4 @@
+//Business Layer
 package com.example.demo.student;
 
 import java.util.List;
@@ -28,9 +29,9 @@ public class StudentService {
         // check valid email is given
         EmailValidator emailValidator = EmailValidator.getInstance();
 
-        if (student.getEmail() != null && !emailValidator.isValid(student.getEmail())) {
+        if (student.getEmail() == null || !emailValidator.isValid(student.getEmail())) {
             throw new IllegalArgumentException("invalid email given");
-        } else if (student.getName().length() <= 0) {
+        } else if (student.getName() == null || student.getName().length() <= 0) {
             throw new IllegalArgumentException("invalid name given");
         }
 
