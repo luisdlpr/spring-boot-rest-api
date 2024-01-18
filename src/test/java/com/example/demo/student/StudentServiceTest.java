@@ -38,7 +38,7 @@ public class StudentServiceTest {
         void newStudent() {
                 Student student = new Student(
                                 "Iona",
-                                "ionskee@gmail.com",
+                                "ionskeegmail.com",
                                 LocalDate.of(1999, 6, 15));
 
                 underTest.addNewStudent(student);
