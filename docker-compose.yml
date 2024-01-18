@@ -1,0 +1,23 @@
+version: '1'
+services:
+  app:
+    image: 'docker-spring-boot-postgres:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/students_db
+      - SPRING_DATASOURCE_USERNAME=luisdlpr
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_studecre_db-drop
+    ports: 
+      - "8080:8080"
+  db:
+    image: postgres
+    restart: always
+    environment: 
+      POSTGRES_USER: luisdlpr
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: students_db
